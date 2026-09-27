@@ -49,7 +49,7 @@ A full replicate is deconstruct, then redesign, then execute. Do not collapse th
 | Opus | Graphic edit: resources, shots, motion graphics, Remotion, UX, UI, and animation. Taste review and point of view stay here | Render the final file. Read the Resolve MCP |
 | Grok | Probe, build, babysit, and read live MCPs | Grade its own execute in the review playbook |
 
-Every lane uses `defaultModel` in `lanes.json` unless that lane sets its own `model`. The default is `claude-opus-5-5` at `xhigh`. Copy `lanes.local.example.json` to `lanes.local.json` to set one lane's provider, model, effort, or `auth` (`oauth` or `key`). When a lane has no working login, every lane uses the first available key or OAuth and that login's model.
+Every lane uses `defaultModel` in `lanes.json` unless that lane sets its own `model`. The default is `claude-opus-5-5` at `xhigh`. Copy `lanes.local.example.json` to `lanes.local.json` to set one lane's provider, model, effort, `auth` (`oauth` or `key`), or `subscription`. Cursor Ultra and OpenCode count as one login that can run many models. When the model's own provider has no login, the lane keeps the requested model and uses that subscription. When no subscription covers it, every lane uses the first available key or OAuth and that login's model.
 
 From a Grok parent, do the Grok lane in this session. Still launch Astra and Opus through the script.
 

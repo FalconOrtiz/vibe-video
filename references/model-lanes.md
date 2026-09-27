@@ -8,7 +8,9 @@
 | Opus | Graphic edit: redesign, resources, shots, motion graphics, Remotion, UX, UI, animation, taste review, point of view |
 | Grok | Probe, execute, babysit, justification that needs a live MCP |
 
-The default model for every lane is `defaultModel` (`claude-opus-5-5`, effort `xhigh`, 128000 tokens). A lane overrides that only in `lanes.local.json`. Auth is the CLI login already on the machine. `auth` may be `oauth` or `key` per lane. A lane with no login uses the first available key or OAuth, and every lane then uses that login's model.
+The default model for every lane is `defaultModel` (`claude-opus-5-5`, effort `xhigh`, 128000 tokens). A lane overrides that only in `lanes.local.json`. Auth is the CLI login already on the machine. `auth` may be `oauth` or `key` per lane.
+
+A subscription such as Cursor Ultra or OpenCode can serve many models from one login. `lanes.json` lists those subscriptions. When the model's own provider has no login, the lane keeps the requested model and sends it through the first subscription that covers it. Set `subscription` to `cursor` or `opencode` to choose that login for one lane or for every lane. A lane with no login and no subscription uses the first available key or OAuth, and every lane then uses that login's model.
 
 ## Launch
 

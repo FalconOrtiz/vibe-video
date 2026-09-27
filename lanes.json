@@ -2,6 +2,10 @@
   "defaultModel": "claude-opus-5-5",
   "defaultEffort": "xhigh",
   "defaultMaxTokens": 128000,
+  "subscriptions": [
+    { "id": "cursor", "command": "agent", "models": ["*"] },
+    { "id": "opencode", "command": "opencode", "models": ["*"] }
+  ],
   "agents": {
     "astra": {
       "jobs": ["deconstruct", "analysis", "review-fidelity", "justify-from-files"]

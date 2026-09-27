@@ -1,7 +1,8 @@
 {
+  "subscription": "cursor",
   "agents": {
     "astra": { "provider": "codex", "model": "gpt-6-astra", "auth": "oauth", "effort": "low" },
-    "opus": { "provider": "claude", "model": "claude-opus-5-5", "auth": "oauth", "effort": "xhigh" },
-    "grok": { "provider": "grok", "model": "grok-4.7", "auth": "oauth", "effort": "high" }
+    "opus": { "model": "claude-opus-5-5", "auth": "oauth", "effort": "xhigh" },
+    "grok": { "model": "grok-4.7", "effort": "high" }
   }
 }

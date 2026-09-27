@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { resolveLane } from "./lane.mjs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,6 +17,16 @@ function node(args) {
   const result = spawnSync(process.execPath, args, { cwd: root, encoding: "utf8" });
   return result.status ?? 1;
 }
+
+const laneFile = JSON.parse(readFileSync(join(root, "lanes.json"), "utf8"));
+const cursorOnly = [{ provider: "cursor", mode: "oauth" }];
+const viaCursor = resolveLane("astra", laneFile, {}, cursorOnly);
+expect("cursor subscription keeps the default model", viaCursor.provider === "cursor" && viaCursor.model === "claude-opus-5-5");
+const otherModel = resolveLane("astra", laneFile, { agents: { astra: { model: "gpt-6-astra", subscription: "cursor" } } }, cursorOnly);
+expect("one subscription can run another model", otherModel.provider === "cursor" && otherModel.model === "gpt-6-astra");
+const openOnly = [{ provider: "opencode", mode: "key" }];
+const viaOpen = resolveLane("opus", laneFile, {}, openOnly);
+expect("opencode subscription keeps the default model", viaOpen.provider === "opencode" && viaOpen.model === "claude-opus-5-5");
 
 expect("source accepts", node(["scripts/check-edit-model.mjs", "examples/source.min.json"]) === 0);
 expect("bad clock rejects", node(["scripts/check-edit-model.mjs", "examples/bad.json"]) === 1);

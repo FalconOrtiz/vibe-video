@@ -56,4 +56,4 @@ node scripts/self-test.mjs
 | Point of view | `playbooks/pov.md` |
 | Justify a cut | `playbooks/justify.md` |
 
-`lanes.json` sets one default model for every lane: `claude-opus-5-5` at `xhigh`. Copy `lanes.local.example.json` to `lanes.local.json` when one lane needs its own provider, model, or `oauth` / `key` login. A lane with no login falls back to the first key or OAuth on the machine, and every lane uses that login's model.
+`lanes.json` sets one default model for every lane: `claude-opus-5-5` at `xhigh`. Copy `lanes.local.example.json` to `lanes.local.json` when one lane needs its own provider, model, `oauth` / `key` login, or a subscription. Cursor Ultra and OpenCode are subscriptions: one login can run many models, and the lane keeps the model you named. A lane with no login and no subscription falls back to the first key or OAuth on the machine, and every lane uses that login's model.
