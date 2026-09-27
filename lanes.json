@@ -9,7 +9,8 @@
     "provider": "claude",
     "model": "claude-opus-5-5",
     "effort": "xhigh",
-    "jobs": ["redesign", "review-taste", "pov"]
+    "maxTokens": 128000,
+    "jobs": ["redesign", "resources", "shots", "motion", "remotion", "ux", "ui", "animation", "review-taste", "pov"]
   },
   "grok": {
     "provider": "grok",

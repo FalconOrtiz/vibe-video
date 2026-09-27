@@ -1,4 +1,8 @@
 node_modules/
+.*
+!.gitignore
+skills/
+skills-lock.json
 *.err
 *.stdout
 .DS_Store

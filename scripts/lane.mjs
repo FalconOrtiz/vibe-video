@@ -68,6 +68,7 @@ function writeReceipt(status, exitCode, argv, elapsedS, note) {
     elapsedS,
     note: note || "The argv records the requested model and effort. It does not record hidden reasoning depth.",
   };
+  if (spec.maxTokens) body.maxTokens = spec.maxTokens;
   writeFileSync(receipt, JSON.stringify(body, null, 2));
 }
 

@@ -34,7 +34,7 @@ Search the folder for `.srt` and `.vtt` before calling subtitles burned.
 
 Read the HyperFrames skill before writing composition HTML. Load `/hyperframes-core` before timing attributes. Load `/hyperframes-animation`, `/hyperframes-keyframes`, `/hyperframes-audio`, and `/hyperframes-registry` for the feature the design names. Search the registry before hand-building a named look.
 
-Remotion work is a project in the video folder. Opus writes the design. Grok writes the composition and renders it. A port from Remotion source to HyperFrames uses the `remotion-to-hyperframes` skill only when the operator asks to port.
+Remotion work is a project in the video folder. Opus writes the composition, the shots, and the motion. Grok renders the final file. `npm install` in this repo installs the Remotion agent skills. A port from Remotion source to HyperFrames uses the `remotion-to-hyperframes` skill only when the operator asks to port.
 
 ## DaVinci Resolve
 

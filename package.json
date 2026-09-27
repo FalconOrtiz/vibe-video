@@ -8,6 +8,8 @@
     "node": ">=22"
   },
   "scripts": {
+    "postinstall": "node scripts/install-remotion-skills.mjs",
+    "install:skills": "node scripts/install-remotion-skills.mjs",
     "test": "node scripts/self-test.mjs"
   }
 }

@@ -5,7 +5,7 @@ The deliverable is `design` JSON. This playbook does not render.
 1. Read `source.json`. If it is missing, run the deconstruct playbook first.
 2. Read the operator brief: target footage, fidelity `0.8` or `1`, canvas change, and the engine if they named one.
 3. Read `references/engines.md` and pick the engine row.
-4. Launch the Opus lane in read-only mode. Give it `source.json`, the brief, and `references/edit-model.md`. Opus returns one `design` document on the target clock.
+4. Launch the Opus lane in workspace mode. The lane file sets `claude-opus-5-5` at `xhigh`. Give it `source.json`, the brief, `references/edit-model.md`, and the Remotion skills installed with this repo. Opus returns one `design` document on the target clock and writes the graphic files: resources, shots, motion graphics, the Remotion composition, UX, UI, and animation. Opus does not render the final file.
 5. Run `scripts/check-edit-model.mjs`. One repair pass on failure. A second failure stops.
 6. Save the passing document as `design.json`.
 7. Report the engine, the fidelity target, `retargetCanvas`, the resource counts, and every carrier the design changes on purpose. Keep each source resource type. Replace logo names, screen contents, and caption text with the target's own. Do not drop a screen-recording effect, a motion-graphic style, a transition name, or a HUD type to make the swap easier.

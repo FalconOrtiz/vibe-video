@@ -5,7 +5,7 @@
 | Lane | Jobs |
 |---|---|
 | Astra | Deconstruct, analysis, fidelity review, justification from files |
-| Opus | Redesign, taste review, point of view |
+| Opus | Graphic edit: redesign, resources, shots, motion graphics, Remotion, UX, UI, animation, taste review, point of view. Effort `xhigh`. Output budget 128000 tokens |
 | Grok | Probe, execute, babysit, justification that needs a live MCP |
 
 ## Launch
@@ -18,7 +18,7 @@ node scripts/lane.mjs --lane astra --parent <grok|claude|codex> --mode read-only
 
 `-Parent` is the harness running this skill. When the parent provider equals the lane provider, the script exits 3 and writes a `native` receipt. Do that work in the parent session. From a Grok parent, Astra and Opus still go through the script. The Grok lane does not.
 
-`-Mode read-only` is the default for Astra and Opus. `-Mode workspace` is for a lane that must write the project. Prefer read-only plus an output file the parent saves after `check-edit-model.mjs` passes.
+`-Mode read-only` is the default for Astra. The Opus graphic edit uses `--mode workspace` so it can write the composition and the resource files. The final render stays on the Grok lane.
 
 A failed launch writes nothing into the project model. Keep the receipt. A retry uses new output and receipt paths.
 

@@ -8,13 +8,23 @@ The tree matches a skill package: `SKILL.md`, `playbooks/`, `references/`, `scri
 
 Node.js 22 or newer is required. `ffprobe` must be on `PATH` before a probe. Codex, Claude, and Grok CLIs are required only for the lane you launch.
 
-Claude Code, Codex, or Grok:
+Copy the repository, then install. `npm install` also installs the Remotion agent skills (`remotion-dev/skills`) into this project.
+
+```bash
+git clone https://github.com/FalconOrtiz/vibe-video.git
+cd vibe-video
+npm install
+```
+
+Claude Code, Codex, or Grok can also load the skill with:
 
 ```bash
 npx skills add FalconOrtiz/vibe-video
 ```
 
-A manual install copies this repository into the skill directory:
+A manual copy of the skill directory still needs `npm install` in that copy so the Remotion skills install.
+
+The skill directory on each host:
 
 | Host | Directory |
 |---|---|

@@ -46,7 +46,7 @@ A full replicate is deconstruct, then redesign, then execute. Do not collapse th
 | Lane | Does | Does not |
 |---|---|---|
 | Astra | Read the probes. Write the source model. Answer analysis, fidelity review, and file-based justification | Design the target. Render |
-| Opus | Write the design, the taste review, and the point of view. Remotion and interface decisions live here | Render. Read the Resolve MCP |
+| Opus | Graphic edit at `xhigh`: resources, shots, motion graphics, Remotion, UX, UI, and animation. Taste review and point of view stay here | Render the final file. Read the Resolve MCP |
 | Grok | Probe, build, babysit, and read live MCPs | Grade its own execute in the review playbook |
 
 Model ids and efforts live in `lanes.json`. The script reads that file.
