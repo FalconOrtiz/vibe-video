@@ -1,21 +1,16 @@
 {
-  "astra": {
-    "provider": "codex",
-    "model": "gpt-6-astra",
-    "effort": "low",
-    "jobs": ["deconstruct", "analysis", "review-fidelity", "justify-from-files"]
-  },
-  "opus": {
-    "provider": "claude",
-    "model": "claude-opus-5-5",
-    "effort": "xhigh",
-    "maxTokens": 128000,
-    "jobs": ["redesign", "resources", "shots", "motion", "remotion", "ux", "ui", "animation", "review-taste", "pov"]
-  },
-  "grok": {
-    "provider": "grok",
-    "model": "grok-4.7",
-    "effort": "high",
-    "jobs": ["probe", "execute", "babysit", "justify-from-mcp"]
+  "defaultModel": "claude-opus-5-5",
+  "defaultEffort": "xhigh",
+  "defaultMaxTokens": 128000,
+  "agents": {
+    "astra": {
+      "jobs": ["deconstruct", "analysis", "review-fidelity", "justify-from-files"]
+    },
+    "opus": {
+      "jobs": ["redesign", "resources", "shots", "motion", "remotion", "ux", "ui", "animation", "review-taste", "pov"]
+    },
+    "grok": {
+      "jobs": ["probe", "execute", "babysit", "justify-from-mcp"]
+    }
   }
 }

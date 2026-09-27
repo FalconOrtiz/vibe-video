@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
 import { readFileSync, existsSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { homedir } from "node:os";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 
@@ -49,8 +50,88 @@ if (!values.force && (existsSync(outFile) || existsSync(receipt))) {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const cfg = JSON.parse(readFileSync(resolve(root, "lanes.json"), "utf8"));
-const spec = cfg[values.lane];
+const localPath = resolve(root, "lanes.local.json");
+const local = existsSync(localPath) ? JSON.parse(readFileSync(localPath, "utf8")) : {};
+const spec = resolveLane(values.lane, cfg, local);
 if (!spec?.provider || !spec?.model || !spec?.effort) fail("lanes.json is missing this lane.");
+
+function readJson(path) {
+  try { return JSON.parse(readFileSync(path, "utf8")); } catch { return null; }
+}
+
+function authInventory() {
+  const home = homedir();
+  const found = [];
+  const claude = readJson(join(home, ".claude", ".credentials.json"));
+  if (claude?.claudeAiOauth?.accessToken) found.push({ provider: "claude", mode: "oauth" });
+  if (process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY) found.push({ provider: "claude", mode: "key" });
+  const codex = readJson(join(home, ".codex", "auth.json"));
+  if (codex?.auth_mode === "chatgpt" && codex?.tokens?.access_token) found.push({ provider: "codex", mode: "oauth" });
+  if (process.env.OPENAI_API_KEY || codex?.OPENAI_API_KEY) found.push({ provider: "codex", mode: "key" });
+  const grok = readJson(join(home, ".grok", "auth.json"));
+  const grokEntry = grok && Object.values(grok).find((entry) => entry && typeof entry === "object");
+  if (grokEntry?.auth_mode === "oidc") found.push({ provider: "grok", mode: "oauth" });
+  if (grokEntry?.auth_mode === "api_key" || process.env.XAI_API_KEY) found.push({ provider: "grok", mode: "key" });
+  return found;
+}
+
+function providerForModel(model) {
+  if (model.startsWith("claude")) return "claude";
+  if (model.startsWith("gpt")) return "codex";
+  if (model.startsWith("grok")) return "grok";
+  return null;
+}
+
+function hasAuth(inventory, provider, mode) {
+  return inventory.some((item) => item.provider === provider && (mode === "auto" || item.mode === mode));
+}
+
+function sharedAuth(inventory) {
+  const order = [
+    ["claude", "oauth"], ["claude", "key"],
+    ["grok", "oauth"], ["grok", "key"],
+    ["codex", "oauth"], ["codex", "key"],
+  ];
+  for (const [provider, mode] of order) {
+    if (hasAuth(inventory, provider, mode)) return { provider, mode };
+  }
+  return null;
+}
+
+function resolveLane(lane, fileCfg, localCfg) {
+  const agents = fileCfg.agents || fileCfg;
+  const base = agents[lane];
+  if (!base) return null;
+  const over = localCfg.agents?.[lane] || {};
+  const inventory = authInventory();
+  const defaultModel = fileCfg.defaultModel || "claude-opus-5-5";
+  const model = over.model || base.model || defaultModel;
+  let provider = over.provider || base.provider || providerForModel(model);
+  const authWant = over.auth || base.auth || "auto";
+  let auth = null;
+  let shared = false;
+  if (provider && hasAuth(inventory, provider, authWant)) {
+    auth = inventory.find((item) => item.provider === provider && (authWant === "auto" || item.mode === authWant));
+  } else {
+    auth = sharedAuth(inventory);
+    shared = true;
+    if (auth) provider = auth.provider;
+  }
+  const nativeModel = { claude: defaultModel, codex: "gpt-6-astra", grok: "grok-4.7" };
+  let modelOut = over.model || base.model || defaultModel;
+  if (!over.model && !base.model && provider && provider !== providerForModel(defaultModel)) {
+    modelOut = nativeModel[provider] || defaultModel;
+  }
+  return {
+    provider,
+    model: modelOut,
+    effort: over.effort || base.effort || fileCfg.defaultEffort || "xhigh",
+    maxTokens: over.maxTokens || base.maxTokens || fileCfg.defaultMaxTokens || 128000,
+    authMode: auth?.mode || "missing",
+    authShared: shared,
+    jobs: base.jobs || [],
+  };
+}
 
 function writeReceipt(status, exitCode, argv, elapsedS, note) {
   const body = {
@@ -60,6 +141,8 @@ function writeReceipt(status, exitCode, argv, elapsedS, note) {
     provider: spec.provider,
     model: spec.model,
     effort: spec.effort,
+    authMode: spec.authMode,
+    authShared: spec.authShared,
     mode: values.mode,
     promptFile,
     outFile,

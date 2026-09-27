@@ -56,4 +56,4 @@ node scripts/self-test.mjs
 | Point of view | `playbooks/pov.md` |
 | Justify a cut | `playbooks/justify.md` |
 
-Model ids live in `lanes.json`. Change that file to pin different model ids. Do not type a model id into a playbook.
+`lanes.json` sets one default model for every lane: `claude-opus-5-5` at `xhigh`. Copy `lanes.local.example.json` to `lanes.local.json` when one lane needs its own provider, model, or `oauth` / `key` login. A lane with no login falls back to the first key or OAuth on the machine, and every lane uses that login's model.

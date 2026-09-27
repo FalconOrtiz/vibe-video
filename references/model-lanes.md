@@ -5,8 +5,10 @@
 | Lane | Jobs |
 |---|---|
 | Astra | Deconstruct, analysis, fidelity review, justification from files |
-| Opus | Graphic edit: redesign, resources, shots, motion graphics, Remotion, UX, UI, animation, taste review, point of view. Effort `xhigh`. Output budget 128000 tokens |
+| Opus | Graphic edit: redesign, resources, shots, motion graphics, Remotion, UX, UI, animation, taste review, point of view |
 | Grok | Probe, execute, babysit, justification that needs a live MCP |
+
+The default model for every lane is `defaultModel` (`claude-opus-5-5`, effort `xhigh`, 128000 tokens). A lane overrides that only in `lanes.local.json`. Auth is the CLI login already on the machine. `auth` may be `oauth` or `key` per lane. A lane with no login uses the first available key or OAuth, and every lane then uses that login's model.
 
 ## Launch
 

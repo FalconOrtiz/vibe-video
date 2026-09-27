@@ -46,10 +46,10 @@ A full replicate is deconstruct, then redesign, then execute. Do not collapse th
 | Lane | Does | Does not |
 |---|---|---|
 | Astra | Read the probes. Write the source model. Answer analysis, fidelity review, and file-based justification | Design the target. Render |
-| Opus | Graphic edit at `xhigh`: resources, shots, motion graphics, Remotion, UX, UI, and animation. Taste review and point of view stay here | Render the final file. Read the Resolve MCP |
+| Opus | Graphic edit: resources, shots, motion graphics, Remotion, UX, UI, and animation. Taste review and point of view stay here | Render the final file. Read the Resolve MCP |
 | Grok | Probe, build, babysit, and read live MCPs | Grade its own execute in the review playbook |
 
-Model ids and efforts live in `lanes.json`. The script reads that file.
+Every lane uses `defaultModel` in `lanes.json` unless that lane sets its own `model`. The default is `claude-opus-5-5` at `xhigh`. Copy `lanes.local.example.json` to `lanes.local.json` to set one lane's provider, model, effort, or `auth` (`oauth` or `key`). When a lane has no working login, every lane uses the first available key or OAuth and that login's model.
 
 From a Grok parent, do the Grok lane in this session. Still launch Astra and Opus through the script.
 

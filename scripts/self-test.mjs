@@ -45,13 +45,17 @@ function dry(lane, parent, tag) {
 
 expect("astra dry-run from grok", dry("astra", "grok", "astra") === 0);
 const astra = readFileSync(join(tmp, "astra.receipt.json"), "utf8");
-expect("astra argv pins gpt-6-astra", astra.includes('"status": "dry-run"') && astra.includes("gpt-6-astra"));
+expect("astra uses the shared default model", astra.includes('"status": "dry-run"') && astra.includes("claude-opus-5-5"));
 
 expect("opus dry-run from grok", dry("opus", "grok", "opus") === 0);
 const opus = readFileSync(join(tmp, "opus.receipt.json"), "utf8");
 expect("opus argv pins claude-opus-5-5", opus.includes('"status": "dry-run"') && opus.includes("claude-opus-5-5"));
 
-expect("grok parent refuses grok shell-out", dry("grok", "grok", "native") === 3);
+expect("grok lane uses the shared default model", dry("grok", "grok", "grok") === 0);
+const grokLane = readFileSync(join(tmp, "grok.receipt.json"), "utf8");
+expect("grok lane pins claude-opus-5-5", grokLane.includes("claude-opus-5-5"));
+
+expect("claude parent keeps the lane native", dry("opus", "claude", "native") === 3);
 expect("native receipt", readFileSync(join(tmp, "native.receipt.json"), "utf8").includes("native"));
 
 const osDir = process.platform === "win32" ? "C:\\WINDOWS\\system32" : "/usr";
