@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "applied",
+  "fidelity": { "target": 1 },
+  "canvas": { "width": 1920, "height": 1080, "fps": 30, "durationS": 10 },
+  "subtitle": { "mode": "none" },
+  "grade": { "name": "rec709" },
+  "audio": { "eq": "voice-presence", "balance": "voice-forward", "loudnessLUFS": -14 },
+  "clocks": [
+    { "id": "cut-1", "kind": "cut", "tIn": 0, "tOut": 2 },
+    { "id": "cut-2", "kind": "cut", "tIn": 2, "tOut": 5 }
+  ],
+  "tracks": [
+    {
+      "id": "picture",
+      "kind": "picture",
+      "clips": [{ "id": "shot-1", "tIn": 0, "tOut": 10, "fx": ["whip", "hard-cut"] }]
+    },
+    {
+      "id": "titles",
+      "kind": "type",
+      "clips": [{ "id": "title-1", "tIn": 1, "tOut": 3, "animIn": "slide-up", "animOut": "fade" }]
+    }
+  ]
+}

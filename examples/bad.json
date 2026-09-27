@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "kind": "source",
+  "canvas": { "width": 1920, "height": 1080, "fps": 30, "durationS": 10 },
+  "subtitle": { "mode": "none" },
+  "clocks": [{ "id": "cut-1", "kind": "cut", "tIn": 2, "tOut": 1 }],
+  "tracks": []
+}

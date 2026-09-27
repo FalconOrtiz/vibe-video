@@ -1,0 +1,13 @@
+{
+  "name": "vibe-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Agent skill that copies an edit grammar onto other footage.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node scripts/self-test.mjs"
+  }
+}
